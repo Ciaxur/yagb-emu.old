@@ -1,0 +1,11 @@
+# Everything .idea
+.idea/*
+
+# CMake
+cmake-build-*/
+build/
+.vs/
+
+# VSC
+.vscode/*
+*.vcxproj*s
