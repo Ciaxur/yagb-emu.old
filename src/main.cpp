@@ -4,9 +4,13 @@
 #include <fstream>
 #include <iomanip>
 
+#include <SDL2/SDL.h>
+
 using namespace std;
 
 void hexDump(char*, std::ostream&);
+
+static SDL_Window* window;
 
 int main(int argc, char **argv) {
 
@@ -53,6 +57,33 @@ int main(int argc, char **argv) {
 
     hexDump(romPath, opCodes);
 
+    // Initialize Window
+    SDL_Init(SDL_INIT_VIDEO);
+
+    window = SDL_CreateWindow(
+        "yagb_emu",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        500,
+        500,
+        SDL_WINDOW_OPENGL
+    );
+
+    SDL_Event windowEvent;
+    while (true) {
+        if (SDL_PollEvent(&windowEvent)) {
+
+            // Check if close button was clicked
+            if (windowEvent.type == SDL_QUIT) break;
+
+        }
+
+        // Swap front and back buffer
+        SDL_GL_SwapWindow(window);
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
     return 0;
 }
 
