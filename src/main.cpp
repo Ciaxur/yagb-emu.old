@@ -1,7 +1,12 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <fstream>
+#include <iomanip>
 
 using namespace std;
+
+void hexDump(char*, std::ostream&);
 
 int main(int argc, char **argv) {
 
@@ -9,6 +14,7 @@ int main(int argc, char **argv) {
     char *romPath = NULL;
     char *asmOutput = NULL;
     bool isDisassemble = false;
+    stringstream opCodes;
 
     // Check Arguments
     for (int i = 0; i < argc; ++i) {
@@ -45,5 +51,46 @@ int main(int argc, char **argv) {
     }
     std::cout << romPath << std::endl;
 
+    hexDump(romPath, opCodes);
+
     return 0;
+}
+
+void hexDump(char *filePath, std::ostream &out) {
+    u_char buffer[1000];
+    int addr = 0;
+    int n;
+    std::ifstream infile;
+    infile.open(filePath);
+
+    // Check if file exists
+    if (!infile) {
+        cout << "File not found" << endl;
+        return;
+    }
+
+    while (true) {
+        infile.read((char *)buffer, 16);
+        // Return buffer size up to 16
+        n = infile.gcount();
+        if (n <= 0) {
+            break;
+        }
+        // Offset 16 bytes per line
+        addr += 16;
+        // Print line of n bytes
+        for (int i = 0; i < 16; i++) {
+            if (i + 1 <= n) {
+                cout << hex << setw(2) << setfill('0') << (int)buffer[i];
+            }
+            // Space each byte
+            cout << " ";
+        }
+        // New line after n bytes
+        cout << "\n";
+        // Break if end of file
+        if (infile.eof()) {
+            break;
+        }
+    }
 }
