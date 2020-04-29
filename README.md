@@ -1,4 +1,10 @@
-# yagb-emu
-Yet another GameBoy Emulator! (IN DEVELOPMENT)
+# yagb-emu (IN DEVELOPMENT)
+Yet another GameBoy Emulator!
 
-Check our progress on [Trello](https://trello.com/b/OjFnTbI9/gb-emulator)
+## Build
+Use cmake to configure and build the project.
+
+```bash
+mkdir build                 # Create a Build Directory
+cd build && cmake ..        # Run cmake to configure and build
+```
