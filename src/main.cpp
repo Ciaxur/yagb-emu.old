@@ -20,20 +20,36 @@ static SDL_Renderer *renderer;
 static SDL_Texture *texture;
 
 
-// DEBUG: Testing out Pixel Drawing
-void drawPixel(int x, int y, int scaleX, int scaleY, u_int32_t color, u_int32_t *pixels) {
-    for (size_t j = y; j < y + scaleY; j++) {
-        for (size_t i = x; i < x + scaleX; i++) {
-            pixels[i + (j * WIDTH)] = color;
-        }
-    }
+// 0  White
+// 1  Light gray
+// 2  Dark gray
+// 3  Black
+enum GB_COLORS {
+    COLOR0 = 0xFFFFFF,
+    COLOR1 = 0xD3D3D3,
+    COLOR2 = 0xA9A9A9,
+    COLOR3 = 0x000000
+};
+
+
+/**
+ * Sets the Pixel to a color at the position given
+ * 
+ * @param x - The X-axis position
+ * @param y - The Y-axis position
+ * @param color - The Color to set the pixel to
+ * @param pixels - Pointer to the pixels array
+ */
+void drawPixel(int x, int y, u_int32_t color, u_int32_t *pixels) {
+    // Map the Pixels
+    pixels[x + (y * WIDTH)] = color;
 }
 
 int main(int argc, char **argv) {
     // Argument Variables
-    char *romPath {NULL};
-    char *asmOutput {NULL};
-    bool isDisassemble {false};
+    char *romPath{NULL};
+    char *asmOutput{NULL};
+    bool isDisassemble{false};
     stringstream opCodes;
 
     // Check Arguments
@@ -85,7 +101,12 @@ int main(int argc, char **argv) {
         HEIGHT * RES_SCALE,
         SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
+    texture = SDL_CreateTexture(
+        renderer,
+        SDL_PIXELFORMAT_RGB888,
+        SDL_TEXTUREACCESS_STREAMING,
+        WIDTH,
+        HEIGHT);
 
 
     SDL_Event windowEvent;
@@ -106,8 +127,22 @@ int main(int argc, char **argv) {
         uint32_t *pixels = static_cast<uint32_t *>(pixels_ptr);
 
         // Update Pixels DEBUG: Small Test to see it in actionw
-        // Red Scaled Single Pixel in the middle
-        drawPixel(WIDTH / 2, HEIGHT / 2, RES_SCALE, RES_SCALE, 0xFF0000, pixels);
+        // Show Off the 4 Shades of Colors
+        int ySplit = HEIGHT / 4;  // Split up into 4 Rows
+
+        for (size_t j = 0; j < ySplit; j++)
+            for (size_t i = 0; i < WIDTH; i++)
+                drawPixel(i, j, COLOR0, pixels);
+        for (size_t j = ySplit; j < ySplit * 2; j++)
+            for (size_t i = 0; i < WIDTH; i++)
+                drawPixel(i, j, COLOR1, pixels);
+        for (size_t j = ySplit * 2; j < ySplit * 3; j++)
+            for (size_t i = 0; i < WIDTH; i++)
+                drawPixel(i, j, COLOR2, pixels);
+        for (size_t j = ySplit * 3; j < ySplit * 4; j++)
+            for (size_t i = 0; i < WIDTH; i++)
+                drawPixel(i, j, COLOR3, pixels);
+
 
         // Apply Updated Pixels & Refresh Rednerer
         SDL_UnlockTexture(texture);
