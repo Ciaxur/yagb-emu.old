@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
         SDL_LockTexture(texture, nullptr, &pixels_ptr, &pitch);
         uint32_t *pixels = static_cast<uint32_t *>(pixels_ptr);
 
-        // Update Pixels DEBUG: Small Test to see it in action
+        // Update Pixels DEBUG: Small Test to see it in actionw
         int sec = (WIDTH / 2) * (HEIGHT / 2);
         for (int i = 0; i < sec; i++)
             pixels[i] = 0xFF0000;  // RED
