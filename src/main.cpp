@@ -1,10 +1,9 @@
 #include <SDL2/SDL.h>
 
-#include <fstream>
-#include <iomanip>
 #include <iostream>
-#include <sstream>
 #include <string>
+
+#include "../include/Utilities.h"
 
 // Window Dimensions (GB Res = 160x144)
 #define RES_SCALE 4
@@ -13,12 +12,9 @@
 
 using namespace std;
 
-void hexDump(char *, std::ostream &);
-
 static SDL_Window *window;
 static SDL_Renderer *renderer;
 static SDL_Texture *texture;
-
 
 // 0  White
 // 1  Light gray
@@ -26,11 +22,10 @@ static SDL_Texture *texture;
 // 3  Black
 enum GB_COLORS {
     COLOR0 = 0xFFFFFF,
-    COLOR1 = 0xD3D3D3,
-    COLOR2 = 0xA9A9A9,
+    COLOR1 = 0xAAAAAA,
+    COLOR2 = 0x555555,
     COLOR3 = 0x000000
 };
-
 
 /**
  * Sets the Pixel to a color at the position given
@@ -54,7 +49,7 @@ int main(int argc, char **argv) {
 
     // Check Arguments
     for (int i = 0; i < argc; ++i) {
-        string arg = argv[i];  // For Comparison
+        string arg = argv[i]; // For Comparison
 
         // Check for Help Argument
         if (arg == "-h") {
@@ -68,7 +63,7 @@ int main(int argc, char **argv) {
                  << "-d \t\t Disassemble Given Rom\n";
             exit(0);
         } else if (arg == "-d") {
-            isDisassemble = true;  // Disassemble and Output
+            isDisassemble = true; // Disassemble and Output
         }
 
         // Check for Path Options
@@ -87,7 +82,10 @@ int main(int argc, char **argv) {
     }
     std::cout << romPath << std::endl;
 
-    hexDump(romPath, opCodes);
+    //Utilities::hexDump(romPath, opCodes);
+
+    Utilities::disassemble(romPath, opCodes);
+    cout << opCodes.str();
 
     // Initialize Window, Renderer, & Texture
     //  Texture will be used to draw on
@@ -126,9 +124,9 @@ int main(int argc, char **argv) {
         SDL_LockTexture(texture, nullptr, &pixels_ptr, &pitch);
         uint32_t *pixels = static_cast<uint32_t *>(pixels_ptr);
 
-        // Update Pixels DEBUG: Small Test to see it in actionw
+        // Update Pixels DEBUG: Small Test to see it in action
         // Show Off the 4 Shades of Colors
-        int ySplit = HEIGHT / 4;  // Split up into 4 Rows
+        int ySplit = HEIGHT / 4; // Split up into 4 Rows
 
         for (size_t j = 0; j < ySplit; j++)
             for (size_t i = 0; i < WIDTH; i++)
@@ -144,7 +142,7 @@ int main(int argc, char **argv) {
                 drawPixel(i, j, COLOR3, pixels);
 
 
-        // Apply Updated Pixels & Refresh Rednerer
+        // Apply Updated Pixels & Refresh Renderer
         SDL_UnlockTexture(texture);
         SDL_RenderCopy(renderer, texture, nullptr, nullptr);
         SDL_RenderPresent(renderer);
@@ -156,43 +154,4 @@ int main(int argc, char **argv) {
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
-}
-
-void hexDump(char *filePath, std::ostream &out) {
-    u_char buffer[1000];
-    int addr = 0;
-    int n;
-    std::ifstream infile;
-    infile.open(filePath);
-
-    // Check if file exists
-    if (!infile) {
-        cout << "File not found" << endl;
-        return;
-    }
-
-    while (true) {
-        infile.read((char *)buffer, 16);
-        // Return buffer size up to 16
-        n = infile.gcount();
-        if (n <= 0) {
-            break;
-        }
-        // Offset 16 bytes per line
-        addr += 16;
-        // Print line of n bytes
-        for (int i = 0; i < 16; i++) {
-            if (i + 1 <= n) {
-                out << hex << setw(2) << setfill('0') << (int)buffer[i];
-            }
-            // Space each byte
-            out << " ";
-        }
-        // New line after n bytes
-        out << "\n";
-        // Break if end of file
-        if (infile.eof()) {
-            break;
-        }
-    }
 }
