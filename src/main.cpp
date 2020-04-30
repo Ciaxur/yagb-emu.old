@@ -6,9 +6,10 @@
 #include <sstream>
 #include <string>
 
-// Window Default Dimensions
-#define WIDTH 500
-#define HEIGHT 500
+// Window Dimensions (GB Res = 160x144)
+#define RES_SCALE 4
+#define WIDTH 160
+#define HEIGHT 144
 
 using namespace std;
 
@@ -19,11 +20,20 @@ static SDL_Renderer *renderer;
 static SDL_Texture *texture;
 
 
+// DEBUG: Testing out Pixel Drawing
+void drawPixel(int x, int y, int scaleX, int scaleY, u_int32_t color, u_int32_t *pixels) {
+    for (size_t j = y; j < y + scaleY; j++) {
+        for (size_t i = x; i < x + scaleX; i++) {
+            pixels[i + (j * WIDTH)] = color;
+        }
+    }
+}
+
 int main(int argc, char **argv) {
     // Argument Variables
-    char *romPath = NULL;
-    char *asmOutput = NULL;
-    bool isDisassemble = false;
+    char *romPath {NULL};
+    char *asmOutput {NULL};
+    bool isDisassemble {false};
     stringstream opCodes;
 
     // Check Arguments
@@ -71,8 +81,8 @@ int main(int argc, char **argv) {
         "yagb_emu",
         SDL_WINDOWPOS_UNDEFINED,
         SDL_WINDOWPOS_UNDEFINED,
-        WIDTH,
-        HEIGHT,
+        WIDTH * RES_SCALE,
+        HEIGHT * RES_SCALE,
         SDL_WINDOW_OPENGL);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT);
@@ -96,15 +106,8 @@ int main(int argc, char **argv) {
         uint32_t *pixels = static_cast<uint32_t *>(pixels_ptr);
 
         // Update Pixels DEBUG: Small Test to see it in actionw
-        int sec = (WIDTH / 2) * (HEIGHT / 2);
-        for (int i = 0; i < sec; i++)
-            pixels[i] = 0xFF0000;  // RED
-
-        for (int i = sec; i < sec * 2; i++)
-            pixels[i] = 0x00FF00;  // GREEN
-
-        for (int i = sec * 2; i < sec * 3; i++)
-            pixels[i] = 0x0000FF;  // BLUE
+        // Red Scaled Single Pixel in the middle
+        drawPixel(WIDTH / 2, HEIGHT / 2, RES_SCALE, RES_SCALE, 0xFF0000, pixels);
 
         // Apply Updated Pixels & Refresh Rednerer
         SDL_UnlockTexture(texture);

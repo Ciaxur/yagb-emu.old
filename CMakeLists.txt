@@ -3,6 +3,10 @@ project(yagb_emu)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Setup Compiler Flags
+set(CMAKE_CXX_FLAGS "-Wall")
+
+
 # Find SDL2 and OpenGL
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules")
 find_package(SDL2 REQUIRED COMPONENTS main)
