@@ -68,84 +68,84 @@ void Utilities::disassemble(char *filePath, std::ostream &out) {
       switch (opcode & 0xF0) {
       case 0x00:
 	switch(opcode & 0x0F){
-	// case 0x00: cout <<"NOP\n "; break;
-	case 0x01: cout <<"STOP 0 "; break;
-	case 0x02: cout <<"JR NZ r8"; break;
-	case 0x03: cout <<"JR NC r8"; break;
-	case 0x04: cout <<"LD B B"; break;
-	case 0x05: cout <<"LD D B"; break;
-	case 0x06: cout <<"LD H B"; break;
-	case 0x07: cout <<"LD (HL) B"; break;
-	case 0x08: cout <<"ADD A B"; break;
-	case 0x09: cout <<"SUB B "; break;
-	case 0x0a: cout <<"AND B "; break;
-	case 0x0b: cout <<"OR B "; break;
-	case 0x0c: cout <<"RET NZ "; break;
-	case 0x0d: cout <<"RET NC "; break;
-	case 0x0e: cout <<"LDH (a8) A"; break;
-	case 0x0f: cout <<"LDH A (a8)"; break;
+	case 0x00: out <<"NOP\n "; break;
+	case 0x01: out <<"STOP 0 "; break;
+	case 0x02: out <<"JR NZ r8"; break;
+	case 0x03: out <<"JR NC r8"; break;
+	case 0x04: out <<"LD B B"; break;
+	case 0x05: out <<"LD D B"; break;
+	case 0x06: out <<"LD H B"; break;
+	case 0x07: out <<"LD (HL) B"; break;
+	case 0x08: out <<"ADD A B"; break;
+	case 0x09: out <<"SUB B "; break;
+	case 0x0a: out <<"AND B "; break;
+	case 0x0b: out <<"OR B "; break;
+	case 0x0c: out <<"RET NZ "; break;
+	case 0x0d: out <<"RET NC "; break;
+	case 0x0e: out <<"LDH (a8) A"; break;
+	case 0x0f: out <<"LDH A (a8)"; break;
 	default:break;
 	}
 	break;
 
       case 0x10:
 	switch(opcode & 0x0F){
-	case 0x00: cout <<"LD BC d16"; break;
-	case 0x01: cout <<"LD DE d16"; break;
-	case 0x02: cout <<"LD HL d16"; break;
-	case 0x03: cout <<"LD SP d16"; break;
-	case 0x04: cout <<"LD B C"; break;
-	case 0x05: cout <<"LD D C"; break;
-	case 0x06: cout <<"LD H C"; break;
-	case 0x07: cout <<"LD (HL) C"; break;
-	case 0x08: cout <<"ADD A C"; break;
-	case 0x09: cout <<"SUB C "; break;
-	case 0x0a: cout <<"AND C "; break;
-	case 0x0b: cout <<"OR C "; break;
-	case 0x0c: cout <<"POP BC "; break;
-	case 0x0d: cout <<"POP DE "; break;
-	case 0x0e: cout <<"POP HL "; break;
-	case 0x0f: cout <<"POP AF "; break;
+	case 0x00: out <<"LD BC d16"; break;
+	case 0x01: out <<"LD DE d16"; break;
+	case 0x02: out <<"LD HL d16"; break;
+	case 0x03: out <<"LD SP d16"; break;
+	case 0x04: out <<"LD B C"; break;
+	case 0x05: out <<"LD D C"; break;
+	case 0x06: out <<"LD H C"; break;
+	case 0x07: out <<"LD (HL) C"; break;
+	case 0x08: out <<"ADD A C"; break;
+	case 0x09: out <<"SUB C "; break;
+	case 0x0a: out <<"AND C "; break;
+	case 0x0b: out <<"OR C "; break;
+	case 0x0c: out <<"POP BC "; break;
+	case 0x0d: out <<"POP DE "; break;
+	case 0x0e: out <<"POP HL "; break;
+	case 0x0f: out <<"POP AF "; break;
 	default: break;
 	}
 	break;
 
       case 0x20:
 	switch(opcode & 0x0F){
-	case 0x00: cout <<"LD (BC) A"; break;
-	case 0x01: cout <<"LD (DE) A"; break;
-	case 0x02: cout <<"LD (HL+) A"; break;
-	case 0x03: cout <<"LD (HL-) A"; break;
-	case 0x04: cout <<"LD B D"; break;
-	case 0x05: cout <<"LD D D"; break;
-	case 0x06: cout <<"LD H D"; break;
-	case 0x07: cout <<"LD (HL) D"; break;
-	case 0x08: cout <<"ADD A D"; break;
-	case 0x09: cout <<"SUB D "; break;
-	case 0x0a: cout <<"AND D "; break;
-	case 0x0b: cout <<"OR D "; break;
-	case 0x0c: cout <<"JP NZ a16"; break;
-	case 0x0d: cout <<"JP NC a16"; break;
-	case 0x0e: cout <<"LD (C) A"; break;
-	case 0x0f: cout <<"LD A (C)"; break;
+	case 0x00: out <<"LD (BC) A"; break;
+	case 0x01: out <<"LD (DE) A"; break;
+	case 0x02: out <<"LD (HL+) A"; break;
+	case 0x03: out <<"LD (HL-) A"; break;
+	case 0x04: out <<"LD B D"; break;
+	case 0x05: out <<"LD D D"; break;
+	case 0x06: out <<"LD H D"; break;
+	case 0x07: out <<"LD (HL) D"; break;
+	case 0x08: out <<"ADD A D"; break;
+	case 0x09: out <<"SUB D "; break;
+	case 0x0a: out <<"AND D "; break;
+	case 0x0b: out <<"OR D "; break;
+	case 0x0c: out <<"JP NZ a16"; break;
+	case 0x0d: out <<"JP NC a16"; break;
+	case 0x0e: out <<"LD (C) A"; break;
+	case 0x0f: out <<"LD A (C)"; break;
 	default: break;
 	}
 	break;
 
       case 0x30:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "INC BC "; break;
-	case 0x03: cout << "INC SP "; break;
-	case 0x04: cout << "LD B E"; break;
-	case 0x05: cout << "LD D E"; break;
-	case 0x06: cout << "LD H E"; break;
-	case 0x07: cout << "LD (HL) E"; break;
-	case 0x08: cout << "ADD A E"; break;
-	case 0x09: cout << "SUB E "; break;
-	case 0x0a: cout << "AND E "; break;
-	case 0x0b: cout << "OR E "; break;
-	case 0x0c: cout << "JP a16 "; break;
-	case 0x0f: cout << "DI "; break;
+	case 0x00: out << "INC BC "; break;
+	case 0x03: out << "INC SP "; break;
+	case 0x04: out << "LD B E"; break;
+	case 0x05: out << "LD D E"; break;
+	case 0x06: out << "LD H E"; break;
+	case 0x07: out << "LD (HL) E"; break;
+	case 0x08: out << "ADD A E"; break;
+	case 0x09: out << "SUB E "; break;
+	case 0x0a: out << "AND E "; break;
+	case 0x0b: out << "OR E "; break;
+	case 0x0c: out << "JP a16 "; break;
+	case 0x0f: out << "DI "; break;
 	default: break;
 	}
 	break;
@@ -153,130 +153,130 @@ void Utilities::disassemble(char *filePath, std::ostream &out) {
 
       case 0x40:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "INC B "; break;
-	case 0x01: cout << "INC D "; break;
-	case 0x02: cout << "INC H "; break;
-	case 0x03: cout << "INC (HL) "; break;
-	case 0x04: cout << "LD B H"; break;
-	case 0x05: cout << "LD D H"; break;
-	case 0x06: cout << "LD H H"; break;
-	case 0x07: cout << "LD (HL) H"; break;
-	case 0x08: cout << "ADD A H"; break;
-	case 0x09: cout << "SUB H "; break;
-	case 0x0a: cout << "AND H "; break;
-	case 0x0b: cout << "OR H "; break;
-	case 0x0c: cout << "CALL NZ a16"; break;
-	case 0x0d: cout << "CALL NC a16"; break;
+	case 0x00: out << "INC B "; break;
+	case 0x01: out << "INC D "; break;
+	case 0x02: out << "INC H "; break;
+	case 0x03: out << "INC (HL) "; break;
+	case 0x04: out << "LD B H"; break;
+	case 0x05: out << "LD D H"; break;
+	case 0x06: out << "LD H H"; break;
+	case 0x07: out << "LD (HL) H"; break;
+	case 0x08: out << "ADD A H"; break;
+	case 0x09: out << "SUB H "; break;
+	case 0x0a: out << "AND H "; break;
+	case 0x0b: out << "OR H "; break;
+	case 0x0c: out << "CALL NZ a16"; break;
+	case 0x0d: out << "CALL NC a16"; break;
 	default: break;
 	}
 	break;
 
       case 0x50:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "DEC B "; break;
-	case 0x01: cout << "DEC D "; break;
-	case 0x02: cout << "DEC H "; break;
-	case 0x03: cout << "DEC (HL) "; break;
-	case 0x04: cout << "LD B L"; break;
-	case 0x05: cout << "LD D L"; break;
-	case 0x06: cout << "LD H L"; break;
-	case 0x07: cout << "LD (HL) L"; break;
-	case 0x08: cout << "ADD A L"; break;
-	case 0x09: cout << "SUB L "; break;
-	case 0x0a: cout << "AND L "; break;
-	case 0x0b: cout << "OR L "; break;
-	case 0x0c: cout << "PUSH BC "; break;
-	case 0x0d: cout << "PUSH DE "; break;
-	case 0x0e: cout << "PUSH HL "; break;
-	case 0x0f: cout << "PUSH AF "; break;
+	case 0x00: out << "DEC B "; break;
+	case 0x01: out << "DEC D "; break;
+	case 0x02: out << "DEC H "; break;
+	case 0x03: out << "DEC (HL) "; break;
+	case 0x04: out << "LD B L"; break;
+	case 0x05: out << "LD D L"; break;
+	case 0x06: out << "LD H L"; break;
+	case 0x07: out << "LD (HL) L"; break;
+	case 0x08: out << "ADD A L"; break;
+	case 0x09: out << "SUB L "; break;
+	case 0x0a: out << "AND L "; break;
+	case 0x0b: out << "OR L "; break;
+	case 0x0c: out << "PUSH BC "; break;
+	case 0x0d: out << "PUSH DE "; break;
+	case 0x0e: out << "PUSH HL "; break;
+	case 0x0f: out << "PUSH AF "; break;
 	default: break;
 	}
 	break;
 
       case 0x60:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "LD B d8"; break;
-	case 0x01: cout << "LD D d8"; break;
-	case 0x02: cout << "LD H d8"; break;
-	case 0x03: cout << "LD (HL) d8"; break;
-	case 0x04: cout << "LD B (HL)"; break;
-	case 0x05: cout << "LD D (HL)"; break;
-	case 0x06: cout << "LD H (HL)"; break;
-	case 0x07: cout << "HALT "; break;
-	case 0x08: cout << "ADD A (HL)"; break;
-	case 0x09: cout << "SUB (HL) "; break;
-	case 0x0a: cout << "AND (HL) "; break;
-	case 0x0b: cout << "OR (HL) "; break;
-	case 0x0c: cout << "ADD A d8"; break;
-	case 0x0d: cout << "SUB d8 "; break;
-	case 0x0e: cout << "AND d8 "; break;
-	case 0x0f: cout << "OR d8 "; break;
+	case 0x00: out << "LD B d8"; break;
+	case 0x01: out << "LD D d8"; break;
+	case 0x02: out << "LD H d8"; break;
+	case 0x03: out << "LD (HL) d8"; break;
+	case 0x04: out << "LD B (HL)"; break;
+	case 0x05: out << "LD D (HL)"; break;
+	case 0x06: out << "LD H (HL)"; break;
+	case 0x07: out << "HALT "; break;
+	case 0x08: out << "ADD A (HL)"; break;
+	case 0x09: out << "SUB (HL) "; break;
+	case 0x0a: out << "AND (HL) "; break;
+	case 0x0b: out << "OR (HL) "; break;
+	case 0x0c: out << "ADD A d8"; break;
+	case 0x0d: out << "SUB d8 "; break;
+	case 0x0e: out << "AND d8 "; break;
+	case 0x0f: out << "OR d8 "; break;
 	default: break;
 	}
 	break;
 
       case 0x70:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "RLCA "; break;
-	case 0x01: cout << "RLA "; break;
-	case 0x02: cout << "DAA "; break;
-	case 0x03: cout << "SCF "; break;
-	case 0x04: cout << "LD B A"; break;
-	case 0x05: cout << "LD D A"; break;
-	case 0x06: cout << "LD H A"; break;
-	case 0x07: cout << "LD (HL) A"; break;
-	case 0x08: cout << "ADD A A"; break;
-	case 0x09: cout << "SUB A "; break;
-	case 0x0a: cout << "AND A "; break;
-	case 0x0b: cout << "OR A "; break;
-	case 0x0c: cout << "RST 00H "; break;
-	case 0x0d: cout << "RST 10H "; break;
-	case 0x0e: cout << "RST 20H "; break;
-	case 0x0f: cout << "RST 30H "; break;
+	case 0x00: out << "RLCA "; break;
+	case 0x01: out << "RLA "; break;
+	case 0x02: out << "DAA "; break;
+	case 0x03: out << "SCF "; break;
+	case 0x04: out << "LD B A"; break;
+	case 0x05: out << "LD D A"; break;
+	case 0x06: out << "LD H A"; break;
+	case 0x07: out << "LD (HL) A"; break;
+	case 0x08: out << "ADD A A"; break;
+	case 0x09: out << "SUB A "; break;
+	case 0x0a: out << "AND A "; break;
+	case 0x0b: out << "OR A "; break;
+	case 0x0c: out << "RST 00H "; break;
+	case 0x0d: out << "RST 10H "; break;
+	case 0x0e: out << "RST 20H "; break;
+	case 0x0f: out << "RST 30H "; break;
 	default: break;
 	}
 	break;
 
       case 0x80:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "LD (a16) SP"; break;
-	case 0x01: cout << "JR r8 "; break;
-	case 0x02: cout << "JR Z r8"; break;
-	case 0x03: cout << "JR C r8"; break;
-	case 0x04: cout << "LD C B"; break;
-	case 0x05: cout << "LD E B"; break;
-	case 0x06: cout << "LD L B"; break;
-	case 0x07: cout << "LD A B"; break;
-	case 0x08: cout << "ADC A B"; break;
-	case 0x09: cout << "SBC A B"; break;
-	case 0x0a: cout << "XOR B "; break;
-	case 0x0b: cout << "CP B "; break;
-	case 0x0c: cout << "RET Z "; break;
-	case 0x0d: cout << "RET C "; break;
-	case 0x0e: cout << "ADD SP r8"; break;
-	case 0x0f: cout << "LD HL SP+r8"; break;
+	case 0x00: out << "LD (a16) SP"; break;
+	case 0x01: out << "JR r8 "; break;
+	case 0x02: out << "JR Z r8"; break;
+	case 0x03: out << "JR C r8"; break;
+	case 0x04: out << "LD C B"; break;
+	case 0x05: out << "LD E B"; break;
+	case 0x06: out << "LD L B"; break;
+	case 0x07: out << "LD A B"; break;
+	case 0x08: out << "ADC A B"; break;
+	case 0x09: out << "SBC A B"; break;
+	case 0x0a: out << "XOR B "; break;
+	case 0x0b: out << "CP B "; break;
+	case 0x0c: out << "RET Z "; break;
+	case 0x0d: out << "RET C "; break;
+	case 0x0e: out << "ADD SP r8"; break;
+	case 0x0f: out << "LD HL SP+r8"; break;
 	default: break;
 	}
 	break;
 
       case 0x90:
 	switch(opcode & 0x0F){
-	case 0x00: cout << "ADD HL BC"; break;
-	case 0x01: cout << "ADD HL DE"; break;
-	case 0x02: cout << "ADD HL HL"; break;
-	case 0x03: cout << "ADD HL SP"; break;
-	case 0x04: cout << "LD C C"; break;
-	case 0x05: cout << "LD E C"; break;
-	case 0x06: cout << "LD L C"; break;
-	case 0x07: cout << "LD A C"; break;
-	case 0x08: cout << "ADC A C"; break;
-	case 0x09: cout << "SBC A C"; break;
-	case 0x0a: cout << "XOR C "; break;
-	case 0x0b: cout << "CP C "; break;
-	case 0x0c: cout << "RET "; break;
-	case 0x0d: cout << "RETI "; break;
-	case 0x0e: cout << "JP (HL) "; break;
-	case 0x0f: cout << "LD SP HL"; break;
+	case 0x00: out << "ADD HL BC"; break;
+	case 0x01: out << "ADD HL DE"; break;
+	case 0x02: out << "ADD HL HL"; break;
+	case 0x03: out << "ADD HL SP"; break;
+	case 0x04: out << "LD C C"; break;
+	case 0x05: out << "LD E C"; break;
+	case 0x06: out << "LD L C"; break;
+	case 0x07: out << "LD A C"; break;
+	case 0x08: out << "ADC A C"; break;
+	case 0x09: out << "SBC A C"; break;
+	case 0x0a: out << "XOR C "; break;
+	case 0x0b: out << "CP C "; break;
+	case 0x0c: out << "RET "; break;
+	case 0x0d: out << "RETI "; break;
+	case 0x0e: out << "JP (HL) "; break;
+	case 0x0f: out << "LD SP HL"; break;
 	default: break;
 	}
 	break;
@@ -294,7 +294,7 @@ void Utilities::disassemble(char *filePath, std::ostream &out) {
 	//         out << "STOP";
 	//         break;
 	//     }
-	// case 0x20: cout << "JR NZ"; break;
+	// case 0x20: out << "JR NZ"; break;
 	//     break;
 
 
