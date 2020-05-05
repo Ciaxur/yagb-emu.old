@@ -68,7 +68,7 @@ void Utilities::disassemble(char *filePath, std::ostream &out) {
       switch (opcode & 0xF0) {
       case 0x00:
 	switch(opcode & 0x0F){
-	case 0x00: cout <<"NOP "; break;
+	// case 0x00: cout <<"NOP\n "; break;
 	case 0x01: cout <<"STOP 0 "; break;
 	case 0x02: cout <<"JR NZ r8"; break;
 	case 0x03: cout <<"JR NC r8"; break;
