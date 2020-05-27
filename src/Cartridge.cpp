@@ -153,35 +153,59 @@ void Cartridge::disassemble() {
                 // Apply Instruction String
                 sprintf(instr_str, "STOP");
                 break;
-            case 0x01:
+            case 0x01:      // 0x11 LD DE, d16 (3Bytes | 3Cycles)
+                ss >> instr.op1;
+                ss >> instr.op2;
+
+                sprintf(instr_str, "LD DE, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x02:
+            case 0x02:      // 0x12 LD (DE), A (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (DE), A");
                 break;
-            case 0x03:
+            case 0x03:      // 0x13 INC DE (1Byte | 2Cycles)
+                sprintf(instr_str, "INC DE");
                 break;
-            case 0x04:
+            case 0x04:      // 0x14 INC D (1Byte | 1Cycle)
+                sprintf(instr_str, "INC D");
                 break;
-            case 0x05:
+            case 0x05:      // 0x15 DEC D (1Byte | 1Cycle)
+                sprintf(instr_str, "DEC D");
                 break;
-            case 0x06:
+            case 0x06:      // 0x16 LD D, d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "LD D, 0x%X", instr.op1);
                 break;
-            case 0x07:
+            case 0x07:      // 0x17 RLA (1Byte | 1Cycle)
+                sprintf(instr_str, "RLA");
                 break;
-            case 0x08:
+            case 0x08:      // 0x18 JR r8 (2Bytes | 3Cycles)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "JR R%X", instr.op1);
                 break;
-            case 0x09:
+            case 0x09:      // 0x19 ADD HL, DE (1Byte | 2Cycles)
+                sprintf(instr_str, "ADD HL, DE");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x1A LD A, (DE) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD A, (DE)");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x1B DEC DE (1Byte | 2Cycles)
+                sprintf(instr_str, "DEC DE");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x1C INC E (1Byte | 1Cycle)
+                sprintf(instr_str, "INC E");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x1D DEC E (1Byte | 1Cycle)
+                sprintf(instr_str, "DEC E");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x1E LD E, d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "LD E, 0x%X", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x1F RRA (1Byte | 1Cycle)
+                sprintf(instr_str, "RRA");
                 break;
             default: ;
             }
