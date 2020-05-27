@@ -7,13 +7,21 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-Wall")
 
 
-# Find SDL2 and OpenGL
+# Find SDL2 OpenGL BOOST
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules")
 find_package(SDL2 REQUIRED COMPONENTS main)
+find_package(Boost REQUIRED COMPONENTS program_options REQUIRED)
 
-include_directories(${SDL2_INCLUDE_DIRS} ${SDL2main_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIR} ${CMAKE_BINARY_DIR})
+include_directories(
+    ${SDL2_INCLUDE_DIRS} ${SDL2main_INCLUDE_DIRS} 
+    ${OPENGL_INCLUDE_DIR} 
+    ${CMAKE_BINARY_DIR}
+    ${Boost_INCLUDE_DIR})
 add_executable(
     yagb_emu 
     src/main.cpp 
     src/Cartridge.cpp include/Cartridge.h)
-target_link_libraries(yagb_emu ${SDL2_LIBS} ${OPENGL_LIBRARIES})
+target_link_libraries(yagb_emu 
+    ${SDL2_LIBS} 
+    ${OPENGL_LIBRARIES}
+    ${Boost_LIBRARIES})

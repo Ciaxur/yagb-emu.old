@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <boost/program_options.hpp>
 
 #include "../include/Cartridge.h"
 
@@ -19,24 +20,69 @@ enum GB_COLORS {
     COLOR3 = 0x000000
 };
 
+
 int main(int argc, char **argv) {
     // Argument Variables
-    char *romPath{NULL};
-    char *asmOutput{NULL};
+    const char *romPath{NULL};
+    const char *asmOutput{NULL};
 
-    // Verify ROM Given
-    if(argc < 2) {
-        std::cerr << "No ROM Given!\n";
+    // Construct Program Options (CMD Valid Arguments)
+    using namespace boost::program_options;
+    options_description desc("Allowed Options");
+    desc.add_options()
+        ("help,h",                                          "Print Usage Message")
+        ("output,o",    value<std::string>(),               "ASM Output File")
+        ("rom,r",       value<std::string>()->required(),   "ROM Path");
+    
+
+    // Map Command Line Inputs
+    variables_map vm;
+    try {
+        store(parse_command_line(argc, argv, desc), vm);
+    
+        // Check Given Args
+        if(vm.count("help") || vm.empty()) {  // Help Menu
+            std::cout << desc << '\n';
+            return 0;
+        }
+
+        if(vm.count("rom")) {       // Given ROM Path
+            romPath = vm["rom"].as<std::string>().c_str();
+            // std::cout << "ROM Path Given: " << romPath << '\n'; // DEBUG: Outputs
+        }
+
+        if(vm.count("output")) {    // Given Output File
+            asmOutput = vm["output"].as<std::string>().c_str();
+            // std::cout << "Output File Given: " << asmOutput << '\n'; // DEBUG: Outputs
+        }
+
+
+        // Verify Arguments (Required Args)
+        notify(vm);
+    }
+    catch(invalid_command_line_syntax &e) {
+        std::cerr << "Argument Error: " << e.what() << '\n';
         return 1;
     }
-        
-    // Assume First Argument is the ROM Path
-    romPath = argv[1];
-    std::cout << "ROM GIVEN: " << romPath << '\n';
+    catch(required_option &e) {
+        std::cerr << "Required Argument not Given! " << e.what() << '\n';
+        return 1;
+    }
 
+
+    
     // Create a Cartridge & Dump
     Cartridge rom(romPath);
-    // rom.hexDump(out);
+
+    // Initiate Hex Dump
+    if(asmOutput != NULL) {
+        std::cout << "Hex Dump written to: " << asmOutput << '\n';
+        
+        std::ofstream out(asmOutput, std::ios::out);    // Overwrite!
+        rom.hexDump(out);
+        out.close();
+    }
+
 
     return 0;
 }

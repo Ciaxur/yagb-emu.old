@@ -9,3 +9,6 @@ build/
 # VSC
 .vscode/*
 *.vcxproj*
+
+# Others
+*.asm
