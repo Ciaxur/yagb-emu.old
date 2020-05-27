@@ -19,8 +19,10 @@ struct Instruction {
     u_char      op1 = 0x00;         // First Operand of Instruction
     u_char      op2 = 0x00;         // Second Operand of Instruction
 
+    // NOTE: How would we reference an instruction based on array from address?
+
     // Pointer to Opcode's Specific Function
-    std::function<void (Instruction&)> *exec;
+    std::function<void (Instruction&)> *exec = nullptr;
 };
 
 

@@ -66,20 +66,35 @@ void Cartridge::hexDump(std::ostream &out, bool printLine) {
 void Cartridge::disassemble() {
     std::stringstream ss;
     hexDump(ss, false);     // Hexdump without Line Numbers
-
-    u_char data;
+    uint16_t data;
 
     while (ss >> data) {
-        Instruction instr;
+        Instruction instr;              // Store each Instruction Object
+        char instr_str[64]{};           // Instruction String Buffer
 
+
+        // Parse Through
+        // TODO: Store Execution Functions
         switch (data & 0xF0) {
         case 0x00:
             switch (data & 0x0F) {
-            case 0x00:
-                instr.instruction = "NOP";
+            case 0x00:      // 0x00 NOP (1Byte | 1Cycle)
+                // Store the Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "NOP");
                 break;
-            case 0x01:
-                instr.instruction = "LD BC ";
+            case 0x01:      // 0x01 LD BC, d16 (3Bytes | 3Cycles)
+                // Store the Opcode
+                instr.opcode = data;
+            
+                // Obtain the Two Operands
+                ss >> instr.op1;
+                ss >> instr.op2;
+                
+                // Apply Instruction String
+                sprintf(instr_str, "LD BC, 0x%X%X", instr.op1, instr.op2);
                 break;
             case 0x02:
                 break;
@@ -116,7 +131,12 @@ void Cartridge::disassemble() {
 
         case 0x10:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x10 STOP (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "STOP");
                 break;
             case 0x01:
                 break;
@@ -169,7 +189,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x06:
                 break;
-            case 0x07:
+            case 0x07:      // 0x27 DAA (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "DAA");
                 break;
             case 0x08:
                 break;
@@ -185,7 +210,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x0E:
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x2F CPL (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "CPL");
                 break;
             default: ;
             }
@@ -208,7 +238,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x06:
                 break;
-            case 0x07:
+            case 0x07:      // 0x37 SCF (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "SCF");
                 break;
             case 0x08:
                 break;
@@ -224,7 +259,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x0E:
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x3F CCF (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String to Buffer
+                sprintf(instr_str, "CCF");
                 break;
             default: ;
             }
@@ -362,7 +402,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x05:
                 break;
-            case 0x06:
+            case 0x06:      // 0x76 HALT (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "HALT");
                 break;
             case 0x07:
                 break;
@@ -652,7 +697,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x02:
                 break;
-            case 0x03:
+            case 0x03:      // 0xF3 DI (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "DI");
                 break;
             case 0x05:
                 break;
@@ -666,7 +716,12 @@ void Cartridge::disassemble() {
                 break;
             case 0x0A:
                 break;
-            case 0x0B:
+            case 0x0B:      // 0xFB EI (1Byte | 1Cycle)
+                // Store Opcode
+                instr.opcode = data;
+
+                // Apply Instruction String
+                sprintf(instr_str, "EI");
                 break;
             case 0x0E:
                 break;
@@ -678,5 +733,18 @@ void Cartridge::disassemble() {
 
         default: ;
         }
+
+
+        // Genearl Properties
+        instr.instruction = instr_str;      // Apply the Instruction Buffer
+
+        // Append Instruction
+        instructions.push_back(instr);
     }
+
+    // DEBUG: Output Disassembly to File
+    std::ofstream file("main.asm", std::ios::out);
+    for(Instruction &i : instructions)
+        file << i.instruction << '\n';
+    file.close();
 }
