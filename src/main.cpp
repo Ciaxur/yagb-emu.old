@@ -19,8 +19,6 @@ enum GB_COLORS {
     COLOR3 = 0x000000
 };
 
-
-
 int main(int argc, char **argv) {
     // Argument Variables
     char *romPath{NULL};
@@ -39,7 +37,6 @@ int main(int argc, char **argv) {
     // Create a Cartridge & Dump
     Cartridge rom(romPath);
     // rom.hexDump(out);
-
 
     return 0;
 }
