@@ -4,10 +4,17 @@ Cartridge::Cartridge(const char* path): filePath(path) {
     disassemble();
 }
 
-void Cartridge::hexDump(std::ostream &out) {
+/**
+ * Outputs a HexDump of Loaded ROM to
+ *  given output stream
+ * 
+ * @param out - Output Stream to write to
+ */
+void Cartridge::hexDump(std::ostream &out, bool printLine) {
     u_char buffer[1000];
     int addr = 0;
     int n;
+    int lineno = 0;
     std::ifstream infile;
     infile.open(filePath);
 
@@ -26,6 +33,13 @@ void Cartridge::hexDump(std::ostream &out) {
         }
         // Offset 16 bytes per line
         addr += 16;
+
+        // Print Line Number (Uppercase ALL)
+        if(printLine)
+            out << std::hex << std::uppercase << std::setw(4) << std::setfill('0') << lineno << '\t';
+        else
+            out << std::uppercase;
+        
         // Print line of n bytes
         for (int i = 0; i < 16; i++) {
             if (i + 1 <= n) {
@@ -36,6 +50,8 @@ void Cartridge::hexDump(std::ostream &out) {
         }
         // New line after n bytes
         out << "\n";
+        lineno += 16;
+        
         // Break if end of file
         if (infile.eof()) {
             break;
@@ -43,9 +59,13 @@ void Cartridge::hexDump(std::ostream &out) {
     }
 }
 
+/**
+ * Disassembles given ROM Instructions, storing
+ *  them in an Instructions Vector Array
+ */
 void Cartridge::disassemble() {
     std::stringstream ss;
-    hexDump(ss);
+    hexDump(ss, false);     // Hexdump without Line Numbers
 
     u_char data;
 
