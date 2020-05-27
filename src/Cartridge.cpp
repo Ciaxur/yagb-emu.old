@@ -71,7 +71,7 @@ void Cartridge::disassemble() {
     while (ss >> data) {
         Instruction instr;              // Store each Instruction Object
         char instr_str[64]{};           // Instruction String Buffer
-
+        instr.opcode = data;            // Store the Opcode
 
         // Parse Through
         // TODO: Store Execution Functions
@@ -79,16 +79,10 @@ void Cartridge::disassemble() {
         case 0x00:
             switch (data & 0x0F) {
             case 0x00:      // 0x00 NOP (1Byte | 1Cycle)
-                // Store the Opcode
-                instr.opcode = data;
-
                 // Apply Instruction String
                 sprintf(instr_str, "NOP");
                 break;
             case 0x01:      // 0x01 LD BC, d16 (3Bytes | 3Cycles)
-                // Store the Opcode
-                instr.opcode = data;
-            
                 // Obtain the Two Operands
                 ss >> instr.op1;
                 ss >> instr.op2;
@@ -434,37 +428,53 @@ void Cartridge::disassemble() {
 
         case 0x80:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x80 ADD B (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x81 ADD C (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x82 ADD D (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x83 ADD E (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x84 ADD H (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x85 ADD L (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0x86 ADD (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "ADD A, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0x87 ADD A (1Byte | 1Cycle)
+                sprintf(instr_str, "ADD A, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x88 ADC B (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x89 ADC C (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x8A ADC D (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x8B ADC E (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x8C ADC H (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x8D ADC L (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x8E ADC (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "ADC A, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x8F ADC A (1Byte | 1Cycle)
+                sprintf(instr_str, "ADC A, A");
                 break;
             default: ;
             }
@@ -473,37 +483,53 @@ void Cartridge::disassemble() {
 
         case 0x90:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x90 SUB B (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x91 SUB C (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x92 SUB D (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x93 SUB E (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x94 SUB H (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x95 SUB L (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0x96 SUB (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "SUB A, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0x97 SUB A (1Byte | 1Cycle)
+                sprintf(instr_str, "SUB A, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x98 SBC B (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x99 SBC C (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x9A SBC D (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x9B SBC E (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x9C SBC H (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x9D SBC L (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x9E SBC (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "SBC A, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x9F SBC A (1Byte | 1Cycle)
+                sprintf(instr_str, "SBC A, A");
                 break;
             default: ;
             }
@@ -512,37 +538,53 @@ void Cartridge::disassemble() {
 
         case 0xA0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xA0 AND B (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0xA1 AND C (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0xA2 AND D (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0xA3 AND E (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0xA4 AND H (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0xA5 AND L (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0xA6 AND (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "AND A, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0xA7 AND A (1Byte | 1Cycle)
+                sprintf(instr_str, "AND A, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0xA8 XOR B (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0xA9 XOR C (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xAA XOR D (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0xAB XOR E (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0xAC XOR H (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0xAD XOR L (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xAE XOR (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "XOR A, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xAF XOR A (1Byte | 1Cycle)
+                sprintf(instr_str, "XOR A, A");
                 break;
             default: ;
             }
@@ -551,37 +593,53 @@ void Cartridge::disassemble() {
 
         case 0xB0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xB0 OR B (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0xB1 OR C (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0xB2 OR D (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0xB3 OR E (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0xB4 OR H (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0xB5 OR L (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0xB6 OR (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "OR A, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0xB7 OR A (1Byte | 1Cycle)
+                sprintf(instr_str, "OR A, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0xB8 CP B (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0xB9 CP C (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xBA CP D (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0xBB CP E (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0xBC CP H (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0xBD CP L (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xBE CP (HL) (1Byte | 2Cycle)
+                sprintf(instr_str, "CP A, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xBF CP A (1Byte | 1Cycle)
+                sprintf(instr_str, "CP A, A");
                 break;
             default: ;
             }
@@ -590,37 +648,75 @@ void Cartridge::disassemble() {
 
         case 0xC0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xC0 RET NZ (1Byte | 5/2Cycle)
+                sprintf(instr_str, "RET NZ");
                 break;
-            case 0x01:
+            case 0x01:      // 0xC1 POP BC (1Byte | 3Cycle)
+                sprintf(instr_str, "POP BC");
                 break;
-            case 0x02:
+            case 0x02:      // 0xC2 JP NZ, a16 (3Byte | 4/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "JP NZ, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x03:
+            case 0x03:      // 0xC3 JP a16 (3Byte | 4Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "JP 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x04:
+            case 0x04:      // 0xC4 CALL NZ, a16 (3Byte | 6/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "CALL NZ, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x05:
+            case 0x05:      // 0xC5 PUSH BC (1Byte | 4Cycle)
+                sprintf(instr_str, "PUSH BC");
                 break;
-            case 0x06:
+            case 0x06:      // 0xC6 ADD A, d8 (2Byte | 2Cycle)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "ADD A, 0x%X", instr.op1);
                 break;
-            case 0x07:
+            case 0x07:      // 0xC7 RST 00H (1Byte | 4Cycle)
+                sprintf(instr_str, "RST 0x00");
                 break;
-            case 0x08:
+            case 0x08:      // 0xC8 RET Z (1Byte | 5/2Cycle)
+                sprintf(instr_str, "RET Z");
                 break;
-            case 0x09:
+            case 0x09:      // 0xC9 RET (1Byte | 4Cycle)
+                sprintf(instr_str, "RET");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xCA JP Z, a16 (3Byte | 4/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "JP Z, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x0B:
+            case 0x0B:      // 0xCB PREFIX (1Byte | 1Cycle)
+                sprintf(instr_str, "PREFIX");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0xCC CALL Z, a16 (3Byte | 6/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "CALL Z, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x0D:
+            case 0x0D:      // 0xCD CALL a16 (3Byte | 6Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "CALL 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xCE ADC A, d8 (2Byte | 2Cycle)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "ADC A, 0x%X", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xCF RST 08H (1Byte | 4Cycle)
+                sprintf(instr_str, "RST 0x08");
                 break;
             default: ;
             }
@@ -629,31 +725,60 @@ void Cartridge::disassemble() {
 
         case 0xD0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xD0 RET NC (1Byte | 5/2Cycle)
+                sprintf(instr_str, "RET NC");
                 break;
-            case 0x01:
+            case 0x01:      // 0xD1 POP DE (1Byte | 3Cycle)
+                sprintf(instr_str, "POP DE");
                 break;
-            case 0x02:
+            case 0x02:      // 0xD2 JP NC, a16 (3Byte | 4/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "JP NC, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x04:
+            case 0x04:      // 0xD4 CALL NC, a16 (3Byte | 6/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+            
+                sprintf(instr_str, "CALL NC, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x05:
+            case 0x05:      // 0xD5 PUSH DE (1Byte | 4Cycle)
+                sprintf(instr_str, "PUSH DE");
                 break;
-            case 0x06:
+            case 0x06:      // 0xD6 SUB d8 (2Byte | 2Cycle)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "SUB 0x%X", instr.op1);
                 break;
-            case 0x07:
+            case 0x07:      // 0xD7 RST 10H (1Byte | 4Cycle)
+                sprintf(instr_str, "RST 0x10");
                 break;
-            case 0x08:
+            case 0x08:      // 0xD8 RET C (1Byte | 4Cycle)
+                sprintf(instr_str, "RETI C");
                 break;
-            case 0x09:
+            case 0x09:      // 0xD9 RETI (1Byte | 4Cycle)
+                sprintf(instr_str, "RETI");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xDA JP C, a16 (3Byte | 4/3Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+                
+                sprintf(instr_str, "JP C, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x0C:
+            case 0x0C:      // 0xDC CALL, a16 (3Byte | 3/6Cycle)
+                ss >> instr.op1;
+                ss >> instr.op2;
+                
+                sprintf(instr_str, "CALL 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xDE SBC A, d8 (2Byte | 2Cycle)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "SBC A, 0x%X", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xDF RST 18H (1Byte | 4Cycle)
+                sprintf(instr_str, "RST 0x18");
                 break;
             default: ;
             }
@@ -662,27 +787,48 @@ void Cartridge::disassemble() {
 
         case 0xE0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xE0 LDH (a8), A (2Byte | 3Cycles)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "LDH (0x%X), A", instr.op1);
                 break;
-            case 0x01:
+            case 0x01:      // 0xE1 POP HL (1Byte | 3Cycles)
+                sprintf(instr_str, "POP HL");
                 break;
-            case 0x02:
+            case 0x02:      // 0xE2 LD (C), A (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (C), A");
                 break;
-            case 0x05:
+            case 0x05:      // 0xE5 PUSH HL (1Byte | 4Cycles)
+                sprintf(instr_str, "PUSH HL");
                 break;
-            case 0x06:
+            case 0x06:      // 0xE6 AND d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "AND A, 0x%X", instr.op1);
                 break;
-            case 0x07:
+            case 0x07:      // 0xE7 RST 20H (1Byte | 4Cycle)
+                sprintf(instr_str, "RST 0x20");
                 break;
-            case 0x08:
+            case 0x08:      // 0xE8 ADD SP, r8 (2Bytes | 4Cycles)
+                ss >> instr.op1;
+            
+                sprintf(instr_str, "ADD SP, R%X", instr.op1);
                 break;
-            case 0x09:
+            case 0x09:      // 0xE9 JP HL (1Byte | 1Cycle)
+                sprintf(instr_str, "JP HL");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xEA LD (a16), A (3Bytes | 4Cycles)
+                ss >> instr.op1;
+                ss >> instr.op2;
+                
+                sprintf(instr_str, "XOR 0x%X%X, A", instr.op1, instr.op2);
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xEE XOR d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+                sprintf(instr_str, "XOR 0x%X", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xEF RST 28H (1Byte | 4Cycles)
+                sprintf(instr_str, "RST 0x28");
                 break;
             default: ;
             }
@@ -691,41 +837,51 @@ void Cartridge::disassemble() {
 
         case 0xF0:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0xF0 LDH A, (a8) (2Bytes | 3Cycles)
+                ss >> instr.op1;
+                sprintf(instr_str, "LDH A, (0x%X)", instr.op1);
                 break;
-            case 0x01:
+            case 0x01:      // 0xF1 POP AF (1Byte | 3Cycles)
+                sprintf(instr_str, "POP AF");
                 break;
-            case 0x02:
+            case 0x02:      // 0xF2 LD A, (C) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD A, (C)");
                 break;
             case 0x03:      // 0xF3 DI (1Byte | 1Cycle)
-                // Store Opcode
-                instr.opcode = data;
-
-                // Apply Instruction String
                 sprintf(instr_str, "DI");
                 break;
-            case 0x05:
+            case 0x05:      // 0xF5 PUSH AF (1Byte | 4Cycles)
+                sprintf(instr_str, "PUSH AF");
                 break;
-            case 0x06:
+            case 0x06:      // 0xF6 RST 30H (1Byte | 4Cycles)
+                sprintf(instr_str, "RST 0x30");
                 break;
             case 0x07:
                 break;
-            case 0x08:
+            case 0x08:      // 0xF8 LD, SP + r8 (2Bytes | 3Cycles)
+                ss >> instr.op1;    // Load in Register Index
+                sprintf(instr_str, "LD, SP + R%X", instr.op1);
                 break;
-            case 0x09:
+            case 0x09:      // 0xF9 LD SP, HL (1Byte | 2Cycles)
+                sprintf(instr_str, "LD SP, HL");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0xFA LD A, (a16) (3Bytes | 4Cycles)
+                ss >> instr.op1;
+                ss >> instr.op2;
+                sprintf(instr_str, "LD A, (0x%X%X)", instr.op1, instr.op2);
                 break;
             case 0x0B:      // 0xFB EI (1Byte | 1Cycle)
-                // Store Opcode
-                instr.opcode = data;
-
-                // Apply Instruction String
                 sprintf(instr_str, "EI");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0xFE CP d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+
+                // (CP d8 assumes CP A, d8)
+                sprintf(instr_str, "CP A, 0x%H", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0xFF RST 38H (1Bytes | 4Cycles)
+
+                sprintf(instr_str, "RST 0x38");
                 break;
             default: ;
             }
