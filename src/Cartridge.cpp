@@ -71,6 +71,7 @@ void Cartridge::disassemble() {
     while (ss >> data) {
         Instruction instr;              // Store each Instruction Object
         char instr_str[64]{};           // Instruction String Buffer
+
         instr.opcode = data;            // Store the Opcode
 
         // Parse Through
@@ -86,37 +87,57 @@ void Cartridge::disassemble() {
                 // Obtain the Two Operands
                 ss >> instr.op1;
                 ss >> instr.op2;
-                
-                // Apply Instruction String
+
                 sprintf(instr_str, "LD BC, 0x%X%X", instr.op1, instr.op2);
                 break;
-            case 0x02:
+            case 0x02:      // 0x02 LD (BC), A (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (BC), A");
                 break;
-            case 0x03:
+            case 0x03:      // 0x03 INC BC (1Byte | 2Cycles)
+                sprintf(instr_str, "INC BC");
                 break;
-            case 0x04:
+            case 0x04:      // 0x04 INC B (1Byte | 1Cycles)
+                sprintf(instr_str, "INC B");
                 break;
-            case 0x05:
+            case 0x05:      // 0x05 DEC B (1Byte | 1Cycles)
+                sprintf(instr_str, "DEC B");
                 break;
-            case 0x06:
+            case 0x06:      // 0x06 LD B, d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "LD B, 0x%X", instr.op1);
                 break;
-            case 0x07:
+            case 0x07:      // 0x07 RLCA (1Bytes | 1Cycles)
+                sprintf(instr_str, "RLCA");
                 break;
-            case 0x08:
+            case 0x08:      // 0x08 LD (a16), SP (3Bytes | 1Cycles)
+                ss >> instr.op1;
+                ss >> instr.op2;
+
+                sprintf(instr_str, "LD ($FF00+0x%X%X), SP", instr.op1, instr.op2);
                 break;
-            case 0x09:
+            case 0x09:      // 0x09 ADD HL, BC  (1Byte | 2Cycles)
+                sprintf(instr_str, "ADD HL, BC");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x0A LD A, (BC) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD A, (BC)");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x0B DEC BC (1Byte | 2Cycles)
+                sprintf(instr_str, "DEC BC");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x0C INC C (1Byte | 1Cycles)
+                sprintf(instr_str, "INC C");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x0D DEC C (1Byte | 1Cycles)
+                sprintf(instr_str, "DEC C");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x0E LD C, d8 (2Bytes | 2Cycles)
+                ss >> instr.op1;
+
+                sprintf(instr_str, "LD C, 0x%X", instr.op1);
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x0F RRCA (1Byte | 1Cycles)
+                sprintf(instr_str, "RRCA");
                 break;
             default: ;
             }
