@@ -346,37 +346,53 @@ void Cartridge::disassemble() {
 
         case 0x40:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x40 LD B, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x41 LD B, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x42 LD B, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x43 LD B, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x44 LD B, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x45 LD B, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0x46 LD B, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD B, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0x47 LD B, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD B, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x48 LD C, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x49 LD C, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x4A LD C, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x4B LD C, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x4C LD C, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x4D LD C, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x4E LD C, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD C, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x4F LD C, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD C, A");
                 break;
             default: ;
             }
@@ -385,37 +401,53 @@ void Cartridge::disassemble() {
 
         case 0x50:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x50 LD D, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x51 LD D, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x52 LD D, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x53 LD D, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x54 LD D, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x55 LD D, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0x56 LD D, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD D, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0x57 LD D, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD D, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x58 LD E, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x59 LD E, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x5A LD E, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x5B LD E, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x5C LD E, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x5D LD E, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x5E LD C, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD E, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x5F LD E, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD E, A");
                 break;
             default: ;
             }
@@ -424,37 +456,53 @@ void Cartridge::disassemble() {
 
         case 0x60:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x60 LD H, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x61 LD H, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x62 LD H, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x63 LD H, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x64 LD H, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x65 LD H, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, L");
                 break;
-            case 0x06:
+            case 0x06:      // 0x66 LD H, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD H, (HL)");
                 break;
-            case 0x07:
+            case 0x07:      // 0x67 LD H, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD H, A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x68 LD L, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x69 LD L, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x6A LD L, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x6B LD L, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x6C LD L, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x6D LD L, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x6E LD L, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD L, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x6F LD L, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD L, A");
                 break;
             default: ;
             }
@@ -463,38 +511,53 @@ void Cartridge::disassemble() {
 
         case 0x70:
             switch (data & 0x0F) {
-            case 0x00:
+            case 0x00:      // 0x70 LD (HL), B (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), B");
                 break;
-            case 0x01:
+            case 0x01:      // 0x71 LD (HL), C (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), C");
                 break;
-            case 0x02:
+            case 0x02:      // 0x72 LD (HL), D (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), D");
                 break;
-            case 0x03:
+            case 0x03:      // 0x73 LD (HL), E (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), E");
                 break;
-            case 0x04:
+            case 0x04:      // 0x70 LD (HL), H (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), H");
                 break;
-            case 0x05:
+            case 0x05:      // 0x71 LD (HL), L (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), L");
                 break;
             case 0x06:      // 0x76 HALT (1Byte | 1Cycle)
                 sprintf(instr_str, "HALT");
                 break;
-            case 0x07:
+            case 0x07:      // 0x77 LD (HL), A (1Byte | 2Cycles)
+                sprintf(instr_str, "LD (HL), A");
                 break;
-            case 0x08:
+            case 0x08:      // 0x78 LD A, B (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, B");
                 break;
-            case 0x09:
+            case 0x09:      // 0x79 LD A, C (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, C");
                 break;
-            case 0x0A:
+            case 0x0A:      // 0x7A LD A, D (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, D");
                 break;
-            case 0x0B:
+            case 0x0B:      // 0x7B LD A, E (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, E");
                 break;
-            case 0x0C:
+            case 0x0C:      // 0x7C LD A, H (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, H");
                 break;
-            case 0x0D:
+            case 0x0D:      // 0x7D LD A, L (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, L");
                 break;
-            case 0x0E:
+            case 0x0E:      // 0x7E LD A, (HL) (1Byte | 2Cycles)
+                sprintf(instr_str, "LD A, (HL)");
                 break;
-            case 0x0F:
+            case 0x0F:      // 0x7F LD A, A (1Byte | 1Cycle)
+                sprintf(instr_str, "LD A, A");
                 break;
             default: ;
             }
