@@ -131,7 +131,7 @@ void Cartridge::disassemble() {
                 ss >> nextByte;
                 instr.op2 = nextByte;
 
-                sprintf(instr_str, "0x%04X \t LD ($FF00+0x%02X%02X), SP", lineno, instr.op1, instr.op2);
+                sprintf(instr_str, "0x%04X \t LD (0xFF00+0x%02X%02X), SP", lineno, instr.op1, instr.op2);
                 lineno += 3;
                 break;
             case 0x09:      // 0x09 ADD HL, BC  (1Byte | 2Cycles)
@@ -165,7 +165,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RRCA", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -254,7 +254,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RRA", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -342,7 +342,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t CPL", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -430,7 +430,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t CCF", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -501,7 +501,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t LD C, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -572,7 +572,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t LD E, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -643,7 +643,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t LD L, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -714,7 +714,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t LD A, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -785,7 +785,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t ADC A, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -856,7 +856,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t SBC A, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -927,7 +927,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t XOR A, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -998,7 +998,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t CP A, A", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -1105,7 +1105,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RST 0x08", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -1190,7 +1190,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RST 0x18", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -1257,7 +1257,7 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RST 0x28", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
@@ -1326,11 +1326,11 @@ void Cartridge::disassemble() {
                 sprintf(instr_str, "0x%04X \t RST 0x38", lineno);
                 lineno += 1;
                 break;
-            default: ;
+            default: lineno += 1;
             }
             break;
 
-        default: ;
+        default: lineno += 1;
         }
 
 
