@@ -20,7 +20,10 @@ include_directories(
 add_executable(
     yagb_emu 
     src/main.cpp 
-    src/Cartridge.cpp include/Cartridge.h)
+    src/Cartridge.cpp include/Cartridge.h
+    src/Memory.cpp include/Memory.h
+    src/PPU.cpp include/PPU.h
+    src/CPU.cpp include/CPU.h)
 target_link_libraries(yagb_emu 
     ${SDL2_LIBS} 
     ${OPENGL_LIBRARIES}

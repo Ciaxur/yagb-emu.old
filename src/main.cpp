@@ -1,8 +1,11 @@
+#include <boost/program_options.hpp>
 #include <iostream>
 #include <string>
-#include <boost/program_options.hpp>
 
+#include "../include/CPU.h"
 #include "../include/Cartridge.h"
+#include "../include/Memory.h"
+#include "../include/PPU.h"
 
 // Window Dimensions (GB Res = 160x144)
 #define RES_SCALE 4
@@ -71,10 +74,10 @@ int main(int argc, char **argv) {
 
 
     
-    // Create a Cartridge & Dump
+    // Load in Cartridge
     Cartridge rom(romPath);
 
-    // Initiate Hex Dump
+    // Check for Hex Dump
     if(asmOutput != NULL) {
         std::cout << "Hex Dump written to: " << asmOutput << '\n';
         
@@ -83,6 +86,19 @@ int main(int argc, char **argv) {
         out.close();
     }
 
+    // Initiate Memory, loading Cartridge Data
+    Memory sharedMemory(rom.getData());
+
+    // Initiate CPU, sharing the Memory
+    CPU cpu(&sharedMemory);
+
+    // Initiate PPU, sharing the Memory
+    PPU ppu(&sharedMemory);
+    
+    // DEBUG: Output Raw Memory Dump to File
+    std::ofstream file("main.asm", std::ios::out);
+    file << sharedMemory.fullDump();    
+    file.close();
 
     return 0;
 }

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <functional>
-#include <vector>
+#include <unordered_map>
 
 /**
  * Instruction Structure for Simplifying
@@ -26,13 +26,15 @@ struct Instruction {
 
 class Cartridge {
     private:    // Private Variables
-        const char*                 filePath;           // File Path to ROM
-        std::vector<Instruction>    instructions;       // Vector Array of Instructions
+        const char* filePath;                                       // File Path to ROM
+        std::unordered_map<uint16_t, Instruction> instructions;     // Map of Instructions
 
     private:    // Private Methods
         void disassemble();                             // Disassembles ROM Instruction storing them into Instructions Vector
     
     public:     // Public Methods
-        Cartridge(const char* path);                    // Constructs ROM
-        void hexDump(std::ostream &, bool=true);        // Outputs a HexDump of Loaded ROM | Line Numbers Print by Default
+        Cartridge(const char* path);                                // Constructs ROM
+
+        void hexDump(std::ostream &, bool=true);                    // Outputs a HexDump of Loaded ROM | Line Numbers Print by Default
+        std::unordered_map<uint16_t, Instruction> &getData();       // Returns the Instructions Data from Cartridge
 };
