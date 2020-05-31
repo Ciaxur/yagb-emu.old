@@ -10,14 +10,14 @@ Memory::Memory() {
 }
 
 /**
- * Initiates Memory with Instructions
+ * Initiates Memory with Cartridge Data
  *  Zeros out Rest of Memory
  * 
  * @param romData - Vector of Instructions for ROM
  */
-Memory::Memory(std::unordered_map<uint16_t, Instruction> &romData) {
+Memory::Memory(Cartridge &cartridge) {
     std::memset(memory, 0x00, 0xFFFF - 0x8000);
-    load(romData);
+    load(cartridge);
 }
 
 /**
@@ -25,45 +25,40 @@ Memory::Memory(std::unordered_map<uint16_t, Instruction> &romData) {
  * 
  * @param romData - Vector of Instructions for ROM
  */
-void Memory::load(std::unordered_map<uint16_t, Instruction> &romData) {
-    rom = romData;
+void Memory::load(Cartridge &cartridge) {
+    this->cartridge = &cartridge;
+    this->cartridge->hexDump(this->rom, false); // Load in Hex Dump without Headers
 }
 
 /**
  * Dumps raw memory into String with Labels
  */
-std::string Memory::fullDump() {
+std::string Memory::dump() { // TODO: Write up Dump
     std::stringstream ss;
 
     // Setup SS Flags
     ss << std::uppercase << std::hex;
 
-    // Dump ROM Bank 0
-    ss << "\t [0x0000 - 0x3FFF] - 16KB ROM Bank 00\n";
-    for(uint16_t i = 0; i <= 0x3FFF; i++) {
-        if(rom[i].instruction.length())
-            ss << rom[i].instruction << '\n';
-    }
-
-    // Dump ROM Bank 01-NN (0x4000 - 0x7FFF)
-    ss << "\t [0x4000 - 0x7FFF] - 16KB ROM Bank 01-NN\n";
-    for(uint16_t i = 0x4000; i <= 0x7FFF; i++) {
-        if(rom[i].instruction.length())
-            ss << rom[i].instruction << '\n';
-        else
-            ss << "0x" << i << '\n';
-    }
-    
-    // Dump Rest of Memory (0x8000 - 0x9FFF)
-    ss << "\t [0x8000 - 0xFFFF] - Rest of Memory\n";
-    for(uint32_t i = 0x8000; i <= 0xFFFF; i++) {
-        ss << "0x"
-            << std::setfill('0') << std::setw(4)
-            << i << "\t0x"
-            << std::setfill('0') << std::setw(2)
-            << int(memory[i - 0x8000]) << '\n';
-    }
+    // TODO: Write up Dump
+    ss << "Dump: In the Works...\n";
 
 
     return ss.str();
 }
+
+/* Getters and Setters for Memory */
+
+/**
+ * Returns the Byte Data at given Address
+ * 
+ * @param addr - Address on Memory
+ */
+uint8_t Memory::getData(uint16_t addr) {} // TODO:
+
+/**
+ * Sets Byte Data at given Address
+ *  Returns if write successful
+ * 
+ * @param addr - Address on Memory
+ */
+bool Memory::setData(uint16_t addr) {} // TODO:

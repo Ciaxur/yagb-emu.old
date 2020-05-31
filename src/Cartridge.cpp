@@ -1,14 +1,11 @@
 #include "../include/Cartridge.h"
 
 /**
- * Initiate the Cartridge with data
- *  and Disassemble the ROM
+ * Initiate the Cartridge
  * 
  * @param path - File Path to ROM
  */
-Cartridge::Cartridge(const char* path): filePath(path) {
-    disassemble();
-}
+Cartridge::Cartridge(const char* path): filePath(path) {}
 
 
 /**
@@ -67,10 +64,10 @@ void Cartridge::hexDump(std::ostream &out, bool printLine) {
 }
 
 /**
- * Disassembles given ROM Instructions, storing
- *  them in an Instructions Vector Array
+ * Disassembles given ROM Instructions, outputting
+ *  to given Output Stream
  */
-void Cartridge::disassemble() {
+void Cartridge::disassemble(std::ostream &out) {
     std::stringstream ss;
     hexDump(ss, false);     // Hexdump without Line Numbers
     uint16_t data;
@@ -78,12 +75,8 @@ void Cartridge::disassemble() {
     int lineno = 0;
 
     while (ss >> data) {
-        // Create new Instruction in Hash Map
-        instructions[lineno] = {};
-
-        
         // Keep Track of Current Working Intruction
-        Instruction *instr_p = &instructions[lineno];
+        Instruction *instr_p = new Instruction();
         char instr_str[64]{};           // Instruction String Buffer
 
         // Store the Opcode
@@ -1349,13 +1342,11 @@ void Cartridge::disassemble() {
 
         // General Properties
         instr_p->instruction = instr_str;      // Apply the Instruction Buffer
-    }
-}
 
-/**
- * Returns the Instructions Data Disassembled
- *  from the ROM
- */
-std::unordered_map<uint16_t, Instruction> &Cartridge::getData() {
-    return this->instructions;
+        // Output to Given Stream
+        out << instr_p->instruction << '\n';
+
+        // Clean up Data
+        delete instr_p;
+    }
 }

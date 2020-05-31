@@ -87,7 +87,7 @@ int main(int argc, char **argv) {
     }
 
     // Initiate Memory, loading Cartridge Data
-    Memory sharedMemory(rom.getData());
+    Memory sharedMemory(rom);
 
     // Initiate CPU, sharing the Memory
     CPU cpu(&sharedMemory);
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
     
     // DEBUG: Output Raw Memory Dump to File
     std::ofstream file("main.asm", std::ios::out);
-    file << sharedMemory.fullDump();    
+    file << sharedMemory.dump();    
     file.close();
 
     return 0;

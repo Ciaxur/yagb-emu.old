@@ -9,7 +9,9 @@
  */
 class Memory {
     private:
-        std::unordered_map<uint16_t, Instruction> rom;         // 0x0000 - 0x7FFF | Cartridge ROM Banks (00 - NN)
+        // 0x0000 - 0x7FFF | Cartridge ROM Banks (00 - NN)
+        std::stringstream rom;          // ROM Hex Dump
+        Cartridge *cartridge;           // Pointer to Given Cartride Object
 
         /** Memory Map (From Pandocs)
          * 
@@ -29,8 +31,11 @@ class Memory {
 
     public:
         Memory();                                                   // Creates Empty Memory Object
-        Memory(std::unordered_map<uint16_t, Instruction>&);         // Initializes Memory with Cartridge Data
+        Memory(Cartridge&);                                         // Initializes Memory with Cartridge Data
 
-        void load(std::unordered_map<uint16_t, Instruction>&);      // Loads in Cartridge Data into Memory
-        std::string fullDump();                                     // Returns Dump of Entire Raw Memory
+        void                load(Cartridge&);                       // Loads in Cartridge Data into Memory
+        uint8_t             getData(uint16_t addr);                 // TODO: Return the Data at given Address
+        bool                setData(uint16_t addr);                 // TODO: Sets the Data at given Address | Returning if Successful
+        std::stringstream&  getRomData();                           // Returns ROM Hex Dump String Stream
+        std::string         dump();                                 // Returns Dump of Entire Raw Memory Map
 };
