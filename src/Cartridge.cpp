@@ -89,12 +89,6 @@ void Cartridge::disassemble() {
         // Store the Opcode
         instr_p->opcode = data;
 
-        // Store the next Two Bytes
-        ss >> nextByte;
-        instr_p->op1 = nextByte;
-        ss >> nextByte;
-        instr_p->op2 = nextByte;
-
 
         // Parse Through
         // TODO: Store Execution Functions
@@ -105,8 +99,15 @@ void Cartridge::disassemble() {
                 // Apply Instruction String
                 sprintf(instr_str, "0x%04X \t NOP", lineno);
                 lineno += 1;  // 1 Byte
+
                 break;
             case 0x01:      // 0x01 LD BC, d16 (3Bytes | 3Cycles)
+                // Obtain the Two Operands
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD BC, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -127,6 +128,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0x06 LD B, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD B, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -135,6 +139,11 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x08:      // 0x08 LD (a16), SP (3Bytes | 1Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD (0xFF00+0x%02X%02X), SP", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -159,6 +168,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0E:      // 0x0E LD C, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD C, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -182,6 +194,11 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x01:      // 0x11 LD DE, d16 (3Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD DE, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -202,6 +219,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0x16 LD D, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD D, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -210,6 +230,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x08:      // 0x18 JR r8 (2Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JR R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -234,6 +257,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0E:      // 0x1E LD E, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD E, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -249,10 +275,18 @@ void Cartridge::disassemble() {
         case 0x20:
             switch (data & 0x0F) {
             case 0x00:      // 0x20 JR NZ, r8 (2Bytes | 3/2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JR NZ, R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x01:      // 0x21 LD HL, d16 (3Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD HL, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -273,6 +307,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0x26 LD H, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD H, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -281,6 +318,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x08:      // 0x28 JR Z, r8 (2Bytes | 3/2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JR Z, R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -305,6 +345,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0E:      // 0x2E LD L, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD L, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -320,10 +363,18 @@ void Cartridge::disassemble() {
         case 0x30:
             switch (data & 0x0F) {
             case 0x00:      // 0x30 JR NC, r8 (2Bytes | 3/2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JR NC, R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x01:      // 0x31 LD SP, d16 (3Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD SP, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -344,6 +395,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0x36 LD (HL), d8 (2Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD (HL), 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -352,6 +406,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x08:      // 0x38 JR C, r8 (2Bytes | 3/2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JR C, R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -376,6 +433,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0E:      // 0x3E LD A, d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LD A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -967,14 +1027,29 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x02:      // 0xC2 JP NZ, a16 (3Byte | 4/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JP NZ, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x03:      // 0xC3 JP a16 (3Byte | 4Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+            
                 sprintf(instr_str, "0x%04X \t JP 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x04:      // 0xC4 CALL NZ, a16 (3Byte | 6/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t CALL NZ, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -983,6 +1058,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0xC6 ADD A, d8 (2Byte | 2Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t ADD A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -999,6 +1077,11 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0A:      // 0xCA JP Z, a16 (3Byte | 4/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JP Z, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -1007,14 +1090,27 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0C:      // 0xCC CALL Z, a16 (3Byte | 6/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t CALL Z, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x0D:      // 0xCD CALL a16 (3Byte | 6Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t CALL 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x0E:      // 0xCE ADC A, d8 (2Byte | 2Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t ADC A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1038,10 +1134,20 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x02:      // 0xD2 JP NC, a16 (3Byte | 4/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JP NC, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x04:      // 0xD4 CALL NC, a16 (3Byte | 6/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t CALL NC, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -1050,6 +1156,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0xD6 SUB d8 (2Byte | 2Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t SUB 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1066,14 +1175,27 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0A:      // 0xDA JP C, a16 (3Byte | 4/3Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t JP C, 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x0C:      // 0xDC CALL, a16 (3Byte | 3/6Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t CALL 0x%02X%02X", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x0E:      // 0xDE SBC A, d8 (2Byte | 2Cycle)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t SBC A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1089,6 +1211,9 @@ void Cartridge::disassemble() {
         case 0xE0:
             switch (data & 0x0F) {
             case 0x00:      // 0xE0 LDH (a8), A (2Byte | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t LDH (0x%02X), A", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1105,6 +1230,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x06:      // 0xE6 AND d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t AND A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1113,6 +1241,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x08:      // 0xE8 ADD SP, r8 (2Bytes | 4Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t ADD SP, R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1121,10 +1252,17 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0A:      // 0xEA LD (a16), A (3Bytes | 4Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
+
                 sprintf(instr_str, "0x%04X \t XOR 0x%02X%02X, A", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
             case 0x0E:      // 0xEE XOR d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
                 sprintf(instr_str, "0x%04X \t XOR 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1140,6 +1278,8 @@ void Cartridge::disassemble() {
         case 0xF0:
             switch (data & 0x0F) {
             case 0x00:      // 0xF0 LDH A, (a8) (2Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
                 sprintf(instr_str, "0x%04X \t LDH A, (0x%02X)", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1166,6 +1306,8 @@ void Cartridge::disassemble() {
             case 0x07:
                 break;
             case 0x08:      // 0xF8 LD, SP + r8 (2Bytes | 3Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte; // Load in Register Index
                 sprintf(instr_str, "0x%04X \t LD, SP + R%02X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
@@ -1174,6 +1316,10 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0A:      // 0xFA LD A, (a16) (3Bytes | 4Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+                ss >> nextByte;
+                instr_p->op2 = nextByte;
                 sprintf(instr_str, "0x%04X \t LD A, (0x%02X%02X)", lineno, instr_p->op1, instr_p->op2);
                 lineno += 3;
                 break;
@@ -1182,6 +1328,9 @@ void Cartridge::disassemble() {
                 lineno += 1;
                 break;
             case 0x0E:      // 0xFE CP d8 (2Bytes | 2Cycles)
+                ss >> nextByte;
+                instr_p->op1 = nextByte;
+
                 // (CP d8 assumes CP A, d8)
                 sprintf(instr_str, "0x%04X \t CP A, 0x%02X", lineno, instr_p->op1);
                 lineno += 2;
