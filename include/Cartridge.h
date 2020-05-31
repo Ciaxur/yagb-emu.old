@@ -25,10 +25,8 @@ class Cartridge {
     private:    // Private Variables
         const char* filePath;                                       // File Path to ROM
 
-    private:    // Private Methods
-        void disassemble(std::ostream&);                            // Disassembles ROM Instruction outputting to Output Stream
-    
     public:     // Public Methods
         Cartridge(const char* path);                                // Constructs ROM
         void hexDump(std::ostream &, bool=true);                    // Outputs a HexDump of Loaded ROM | Line Numbers Print by Default
+        void disassemble(std::ostream&);                            // Disassembles ROM Instruction outputting to Output Stream
 };

@@ -118,7 +118,7 @@ void CPU::run() {
             PC += 1;
             break;
         case 0x08:      // 0x18 JR r8 (2Bytes | 3Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x09:      // 0x19 ADD HL, DE (1Byte | 2Cycles)
@@ -151,7 +151,7 @@ void CPU::run() {
     case 0x20:
         switch (opcode & 0x0F) {
         case 0x00:      // 0x20 JR NZ, r8 (2Bytes | 3/2Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x01:      // 0x21 LD HL, d16 (3Bytes | 3Cycles)
@@ -179,7 +179,7 @@ void CPU::run() {
             PC += 1;
             break;
         case 0x08:      // 0x28 JR Z, r8 (2Bytes | 3/2Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x09:      // 0x29 ADD HL, HL (1Byte | 2Cycles)
@@ -212,7 +212,7 @@ void CPU::run() {
     case 0x30:
         switch (opcode & 0x0F) {
         case 0x00:      // 0x30 JR NC, r8 (2Bytes | 3/2Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x01:      // 0x31 LD SP, d16 (3Bytes | 3Cycles)
@@ -240,7 +240,7 @@ void CPU::run() {
             PC += 1;
             break;
         case 0x08:      // 0x38 JR C, r8 (2Bytes | 3/2Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x09:      // 0x39 ADD HL, SP (1Byte | 2Cycles)
@@ -858,7 +858,7 @@ void CPU::run() {
             PC += 1;
             break;
         case 0x08:      // 0xE8 ADD SP, r8 (2Bytes | 4Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x09:      // 0xE9 JP HL (1Byte | 1Cycle)
@@ -905,7 +905,7 @@ void CPU::run() {
         case 0x07:
             break;
         case 0x08:      // 0xF8 LD, SP + r8 (2Bytes | 3Cycles)
-            op1 = memory->getData(PC + 1);
+            op1 = memory->getData(PC + 1) & 0xF;
             PC += 2;
             break;
         case 0x09:      // 0xF9 LD SP, HL (1Byte | 2Cycles)

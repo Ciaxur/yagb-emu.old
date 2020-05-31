@@ -224,9 +224,9 @@ void Cartridge::disassemble(std::ostream &out) {
                 break;
             case 0x08:      // 0x18 JR r8 (2Bytes | 3Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t JR R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t JR R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x09:      // 0x19 ADD HL, DE (1Byte | 2Cycles)
@@ -269,9 +269,9 @@ void Cartridge::disassemble(std::ostream &out) {
             switch (data & 0x0F) {
             case 0x00:      // 0x20 JR NZ, r8 (2Bytes | 3/2Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t JR NZ, R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t JR NZ, R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x01:      // 0x21 LD HL, d16 (3Bytes | 3Cycles)
@@ -312,9 +312,9 @@ void Cartridge::disassemble(std::ostream &out) {
                 break;
             case 0x08:      // 0x28 JR Z, r8 (2Bytes | 3/2Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t JR Z, R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t JR Z, R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x09:      // 0x29 ADD HL, HL (1Byte | 2Cycles)
@@ -357,9 +357,9 @@ void Cartridge::disassemble(std::ostream &out) {
             switch (data & 0x0F) {
             case 0x00:      // 0x30 JR NC, r8 (2Bytes | 3/2Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t JR NC, R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t JR NC, R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x01:      // 0x31 LD SP, d16 (3Bytes | 3Cycles)
@@ -400,9 +400,9 @@ void Cartridge::disassemble(std::ostream &out) {
                 break;
             case 0x08:      // 0x38 JR C, r8 (2Bytes | 3/2Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t JR C, R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t JR C, R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x09:      // 0x39 ADD HL, SP (1Byte | 2Cycles)
@@ -1235,9 +1235,9 @@ void Cartridge::disassemble(std::ostream &out) {
                 break;
             case 0x08:      // 0xE8 ADD SP, r8 (2Bytes | 4Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte;
+                instr_p->op1 = nextByte & 0xF;
 
-                sprintf(instr_str, "0x%04X \t ADD SP, R%02X", lineno, instr_p->op1);
+                sprintf(instr_str, "0x%04X \t ADD SP, R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x09:      // 0xE9 JP HL (1Byte | 1Cycle)
@@ -1300,8 +1300,8 @@ void Cartridge::disassemble(std::ostream &out) {
                 break;
             case 0x08:      // 0xF8 LD, SP + r8 (2Bytes | 3Cycles)
                 ss >> nextByte;
-                instr_p->op1 = nextByte; // Load in Register Index
-                sprintf(instr_str, "0x%04X \t LD, SP + R%02X", lineno, instr_p->op1);
+                instr_p->op1 = nextByte & 0xF; // Load in Register Index
+                sprintf(instr_str, "0x%04X \t LD, SP + R%01X", lineno, instr_p->op1);
                 lineno += 2;
                 break;
             case 0x09:      // 0xF9 LD SP, HL (1Byte | 2Cycles)

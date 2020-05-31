@@ -27,15 +27,17 @@ enum GB_COLORS {
 int main(int argc, char **argv) {
     // Argument Variables
     const char *romPath{NULL};
+    const char *hexOutput{NULL};
     const char *asmOutput{NULL};
 
     // Construct Program Options (CMD Valid Arguments)
     using namespace boost::program_options;
     options_description desc("Allowed Options");
     desc.add_options()
-        ("help,h",                                          "Print Usage Message")
-        ("output,o",    value<std::string>(),               "ASM Output File")
-        ("rom,r",       value<std::string>()->required(),   "ROM Path");
+        ("help,h",                                              "Print Usage Message")
+        ("output,o",        value<std::string>(),               "Hex Output File")
+        ("disassemble,d",   value<std::string>(),               "Disassemble ASM Output File")
+        ("rom,r",           value<std::string>()->required(),   "ROM Path");
     
 
     // Map Command Line Inputs
@@ -51,12 +53,14 @@ int main(int argc, char **argv) {
 
         if(vm.count("rom")) {       // Given ROM Path
             romPath = vm["rom"].as<std::string>().c_str();
-            // std::cout << "ROM Path Given: " << romPath << '\n'; // DEBUG: Outputs
         }
 
         if(vm.count("output")) {    // Given Output File
-            asmOutput = vm["output"].as<std::string>().c_str();
-            // std::cout << "Output File Given: " << asmOutput << '\n'; // DEBUG: Outputs
+            hexOutput = vm["output"].as<std::string>().c_str();
+        }
+
+        if(vm.count("disassemble")) {    // Given Output File
+            asmOutput = vm["disassemble"].as<std::string>().c_str();
         }
 
 
@@ -78,11 +82,20 @@ int main(int argc, char **argv) {
     Cartridge rom(romPath);
 
     // Check for Hex Dump
+    if(hexOutput != NULL) {
+        std::cout << "Hex Dump written to: " << hexOutput << '\n';
+        
+        std::ofstream out(hexOutput, std::ios::out);    // Overwrite!
+        rom.hexDump(out);
+        out.close();
+    }
+    
+    // Check for Disassembly of ROM
     if(asmOutput != NULL) {
-        std::cout << "Hex Dump written to: " << asmOutput << '\n';
+        std::cout << "Disassembled to: " << asmOutput << '\n';
         
         std::ofstream out(asmOutput, std::ios::out);    // Overwrite!
-        rom.hexDump(out);
+        rom.disassemble(out);
         out.close();
     }
 
@@ -96,7 +109,7 @@ int main(int argc, char **argv) {
     PPU ppu(&sharedMemory);
     
     // DEBUG: Output Raw Memory Dump to File
-    std::ofstream file("main.asm", std::ios::out);
+    std::ofstream file("mem.dump", std::ios::out);
     file << sharedMemory.dump();    
     file.close();
 
