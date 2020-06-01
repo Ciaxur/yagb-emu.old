@@ -934,3 +934,41 @@ void CPU::run() {
     default: PC += 1;
     }
 }
+
+
+/**
+ * INSTRUCTION: ADD A, r8
+ * OPCODES: 
+ *  - 0x80, 0x81, 0x82, 0x83, 0x84, 0x85
+ *  - 0x86, 0x87
+ * BYTES:  1
+ * CYCLES: 1 / 2 for 0x86
+ * FLAGS:  Z N H C
+ * 
+ * Add value of register r8 to register A
+ * 
+ * @param r8 - Pointer to 8-bit Register
+ */
+void CPU::ADD(uint8_t *r8) {
+    // Temporarily Store Result
+    uint8_t res = R[REGISTER::A] + *r8;
+
+    // Handle Flags
+    // Set Zero Flag
+    if(res == 0)
+        R[REGISTER::F] |= 0x80;
+    
+    // Set N Flag to 0 (0x40)
+    R[REGISTER::F] &= 0xBF;
+
+    // Set H if Bit 3 Overflow
+    if(res > 0x0F)
+        R[REGISTER::F] |= 0x20;
+    
+    // Set C if Bit 7 Overflow
+    if((R[REGISTER::A] + *r8) > 0xFF)
+        R[REGISTER::F] |= 0x10;
+
+    // Add value of register to register A
+    R[REGISTER::A] = res;
+};
