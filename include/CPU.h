@@ -37,4 +37,5 @@ class CPU {
     
     protected: // Instruction Set
         void ADD(uint8_t*);         // 0x80-0x87 | ADD A, r8
+        void ADC(uint8_t*);         // 0x88-0x8F | ADC A, r8
 };

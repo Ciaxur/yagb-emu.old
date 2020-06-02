@@ -972,3 +972,42 @@ void CPU::ADD(uint8_t *r8) {
     // Add value of register to register A
     R[REGISTER::A] = res;
 };
+
+
+/**
+ * INSTRUCTION: ADC A, r8
+ * OPCODES: 
+ *  - 0x88, 0x89, 0x8A, 0x8B, 0x8C
+ *  - 0x8D, 0x8E, 0x8F
+ * BYTES:  1
+ * CYCLES: 1 / 2 for 0x8E
+ * FLAGS:  Z N H C
+ * 
+ * Add the value in r8 plus the carry flag to A
+ * 
+ * @param r8 - Pointer to 8-bit Register
+ */
+void CPU::ADC(uint8_t *r8) {
+    // Calculate Result
+    uint8_t CF = (R[REGISTER::F] & 0x10) >> 4; // Get Carry Flag Shifting it to get 1 or 0
+    uint8_t res = R[REGISTER::A] + *r8 + CF;
+    
+    // Handle Flags
+    // Set Zero Flag
+    if(res == 0)
+        R[REGISTER::F] |= 0x80;
+    
+    // Set N Flag to 0 (0x40)
+    R[REGISTER::F] &= 0xBF;
+
+    // Set H if Bit 3 Overflow
+    if(res > 0x0F)
+        R[REGISTER::F] |= 0x20;
+    
+    // Set C if Bit 7 Overflow
+    if((R[REGISTER::A] + *r8 + CF) > 0xFF)
+        R[REGISTER::F] |= 0x10;
+    
+    // Add value of register to register A
+    R[REGISTER::A] = res;
+}
